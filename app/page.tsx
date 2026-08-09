@@ -10,6 +10,7 @@ import RoleView from '@/components/RoleView';
 import MonitorView from '@/components/MonitorView';
 import GeoView from '@/components/GeoView';
 import RoomChannelsView from '@/components/RoomChannelsView';
+import WorldView from '@/components/WorldView';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 
@@ -70,6 +71,8 @@ export default function Page() {
       <main className="flex min-h-0 min-w-0 flex-1">
         {view === 'settings' ? (
           <Settings />
+        ) : view === 'world' ? (
+          <WorldView />
         ) : view === 'monitor' ? (
           <MonitorView />
         ) : view === 'geo' ? (

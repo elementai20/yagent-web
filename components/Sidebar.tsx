@@ -55,6 +55,7 @@ export default function Sidebar({ connected, onNavigate }: SidebarProps) {
   const showHome = useAgentStore((s) => s.showHome);
   const showMonitor = useAgentStore((s) => s.showMonitor);
   const showGeo = useAgentStore((s) => s.showGeo);
+  const showWorld = useAgentStore((s) => s.showWorld);
   const showRooms = useAgentStore((s) => s.showRooms);
   const rooms = useAgentStore((s) => s.rooms);
   const activeRoomId = useAgentStore((s) => s.activeRoomId);
@@ -95,6 +96,24 @@ export default function Sidebar({ connected, onNavigate }: SidebarProps) {
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
+        {/* 世界 — the game world (WorkAdventure), embedded. Its own origin, so
+            this is a frame, not a route. Top of the list: it's the thing this
+            project is about. */}
+        <Section title="世界">
+          <div className="px-2">
+            <button
+              onClick={go(showWorld)}
+              className={cn(
+                'flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-[13px] hover:bg-[var(--panel-2)]',
+                view === 'world' && 'bg-[var(--panel-2)]',
+              )}
+            >
+              <span className="text-base">🗺️</span>
+              <span className="truncate font-semibold text-foreground">走進世界</span>
+            </button>
+          </div>
+        </Section>
+
         {/* Sessions */}
         <Section title="Sessions" defaultOpen={false}>
           <SessionList onSelect={onNavigate} />

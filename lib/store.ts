@@ -18,7 +18,7 @@ import type {
   UsageSnapshot,
 } from './types';
 
-type View = 'welcome' | 'session' | 'settings' | 'role' | 'monitor' | 'rooms' | 'geo';
+type View = 'welcome' | 'session' | 'settings' | 'role' | 'monitor' | 'rooms' | 'geo' | 'world';
 
 // Minimal shape of the persisted OpenAI message array (system prompt already
 // stripped server-side). Kept loose — we only read the fields we render.
@@ -164,6 +164,8 @@ interface AgentStore {
   runGeo(input: { company: string; vertical?: string; market?: string; aliases?: string[] }): Promise<void>;
   /** Open a past report from the history list. */
   openGeoReport(id: string): void;
+  /** Open the game world (WorkAdventure, embedded in an iframe). */
+  showWorld(): void;
   /** Open the Room channels view (multi-role meeting rooms), optionally on one room. */
   showRooms(roomId?: string): void;
   loadRooms(): Promise<void>;
@@ -245,6 +247,18 @@ export const useAgentStore = create<AgentStore>()(
       } catch {
         /* backend not up yet */
       }
+    },
+
+    /**
+     * Open the game world. Nothing to fetch — the world is a separate origin
+     * (the WorkAdventure stack) that we only embed; WorldView probes whether
+     * it is actually up.
+     */
+    showWorld() {
+      set((s) => {
+        s.view = 'world';
+        s.selected = null;
+      });
     },
 
     /** Open the GEO diagnosis view and (re)fetch past reports. */

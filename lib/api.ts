@@ -12,3 +12,11 @@ export const wsUrl = (): string => {
   const origin = BASE || (typeof location !== 'undefined' ? location.origin : '');
   return origin.replace(/^http/, 'ws') + '/ws';
 };
+
+/**
+ * Origin of the game world (the WorkAdventure stack), which is a *separate*
+ * deployment from the backend — hence its own variable rather than a path off
+ * BASE. Locally it is the compose stack in `star-map-y/game` on :8081.
+ * Inlined at build time like every NEXT_PUBLIC_*.
+ */
+export const GAME_URL = (process.env.NEXT_PUBLIC_GAME_URL ?? 'http://localhost:8081').replace(/\/+$/, '');
